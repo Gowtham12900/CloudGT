@@ -1,4 +1,5 @@
 <?php
+
    session_start();
    
    // ✅ Check session login
@@ -6,6 +7,7 @@
        echo "<script>alert('Please login to access'); window.location.href='index.php';</script>";
        exit;
    }
+   
    ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -129,29 +131,38 @@
                                     <th scope="col">Location</th>
                                     <th scope="col">Course</th>
                                     <th scope="col">Booked At</th>
+                                    <th scope="col">Action</th> <!-- 👈 New -->
                                  </tr>
                               </thead>
+
                               <tbody>
                                  <?php
-                                    $sno = 1; // Start from 1
+                                    $sno = 1;
                                     if ($result && $result->num_rows > 0) {
-                                        while ($row = $result->fetch_assoc()) {
-                                            echo "<tr>
-                                                    <th scope='row'>{$sno}</th>
-                                                    <td>{$row['name']}</td>
-                                                    <td>{$row['number']}</td>
-                                                    <td>{$row['location']}</td>
-                                                    <td>{$row['course']}</td>
-                                                    <td>{$row['created_at']}</td>
+                                       while ($row = $result->fetch_assoc()) {
+                                          echo "<tr>
+                                                   <th scope='row'>{$sno}</th>
+                                                   <td>{$row['name']}</td>
+                                                   <td>{$row['number']}</td>
+                                                   <td>{$row['location']}</td>
+                                                   <td>{$row['course']}</td>
+                                                   <td>{$row['created_at']}</td>
+                                                   <td>
+                                                      <form method='POST' action='delete.php' onsubmit=\"return confirm('Are you sure you want to delete this booking?');\">
+                                                         <input type='hidden' name='delete_id' value='{$row['id']}'>
+                                                         <button type='submit' name='delete' class='btn btn-danger btn-sm'>Delete</button>
+                                                      </form>
+                                                   </td>
                                                 </tr>";
-                                            $sno++;
-                                        }
+                                          $sno++;
+                                       }
                                     } else {
-                                       echo "<tr><td colspan='6' style='text-align:center; color:#f1e60b; font-size:28px; font-weight:bold;'>No Bookings Found.</td></tr>";
-                                    
+                                       echo "<tr><td colspan='7' style='text-align:center; color:#f1e60b; font-size:28px; font-weight:bold;'>No Bookings Found.</td></tr>";
                                     }
-                                    ?>
+                                 ?>
                               </tbody>
+
+
                            </table>
                            <?php $conn->close(); ?>
                         </div>
