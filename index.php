@@ -1227,68 +1227,102 @@
          </div>
       </section>
       <section class="team-sec space">
-         <div class="container z-index-common">
-            <div class="title-area text-center">
-               <span data-aos="fade-up" data-aos-duration="1000" class="sub-title">
-                  <div class="icon-masking me-2">
-                     <span class="mask-icon" data-mask-src="assets/img/theme-img/title_shape_1.svg"></span>
-                     <img src="assets/img/theme-img/title_shape_1.svg" alt="shape">
-                  </div>
-                  TEAM MEMBER
-               </span>
-               <h2 data-aos="zoom-in" data-aos-duration="1000" class="sec-title">
-                  Technologies Handled By Trainer <span class="text-theme">Pavan & Team</span>
-               </h2>
+   <div class="container z-index-common">
+      <div class="title-area text-center">
+         <span data-aos="fade-up" data-aos-duration="1000" class="sub-title">
+            <div class="icon-masking me-2">
+               <span class="mask-icon" data-mask-src="assets/img/theme-img/title_shape_1.svg"></span>
+               <img src="assets/img/theme-img/title_shape_1.svg" alt="shape">
             </div>
-            <div class="row justify-content-center">
-               <div class="col-md-4 mb-4">
-                  <div class="th-team team-card" style="height: 450px;">
-                     <div class="team-img"><img src="assets/img/team/team-1.svg" alt="Team" style="width: 100%; height: auto;"></div>
-                     <div class="team-content" style="padding: 20px;">
-                        <div class="box-particle" id="team-p1"></div>
-                        <h3 class="box-title">Nagaprabhu</h3>
-                        <div class="team-meta">
-                           <span class="team-desig"><b>Team Lead : Multi Cloud</b></span>
-                           <span class="team-desig" style="display: block; margin-top: 6px; font-weight: 500;">
-                           Experience: 10+ Years
-                           </span>
-                        </div>
-                     </div>
-                  </div>
+            TEAM MEMBERS
+         </span>
+         <h2 data-aos="zoom-in" data-aos-duration="1000" class="sec-title">
+            Technologies Handled By Trainer <span class="text-theme">Pavan & Team</span>
+         </h2>
+      </div>
+
+      <!-- ✅ Team Members Row -->
+      <div class="row gy-4">
+         <!-- 👤 Member 1 -->
+         <div class="col-md-4">
+            <div class="th-team team-card" style="height: 450px;">
+               <div class="team-img">
+                  <img src="assets/img/team/team-1.svg" alt="Team" style="width: 100%; height: auto;">
                </div>
-               <div class="col-md-4 mb-4">
-                  <div class="th-team team-card" style="height: 450px;">
-                     <div class="team-img"><img src="assets/img/team/team-2.svg" alt="Team" style="width: 100%; height: auto;"></div>
-                     <div class="team-content" style="padding: 20px;">
-                        <div class="box-particle" id="team-p1"></div>
-                        <h3 class="box-title">Ajith Shanmugavel</h3>
-                        <div class="team-meta">
-                           <span class="team-desig"><b>Azure DevOps</b></span>
-                           <span class="team-desig" style="display: block; margin-top: 6px; font-weight: 500;">
-                           Experience: 5+ Years
-                           </span>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-               <div class="col-md-4 mb-4">
-                  <div class="th-team team-card" style="height: 450px;">
-                     <div class="team-img"><img src="assets/img/team/team-3.svg" alt="Team" style="width: 100%; height: auto;"></div>
-                     <div class="team-content" style="padding: 20px;">
-                        <div class="box-particle" id="team-p1"></div>
-                        <h3 class="box-title">Manojkumar T</h3>
-                        <div class="team-meta">
-                           <span class="team-desig"><b>Aws DevOps</b></span>
-                           <span class="team-desig" style="display: block; margin-top: 6px; font-weight: 500;">
-                           Experience: 5+ Years
-                           </span>
-                        </div>
-                     </div>
+               <div class="team-content" style="padding: 20px;">
+                  <div class="box-particle" id="team-p1"></div>
+                  <h3 class="box-title">Nagaprabhu</h3>
+                  <div class="team-meta">
+                     <span class="team-desig"><b>Team Lead : Multi Cloud</b></span>
+                     <span class="team-desig" style="display: block; margin-top: 6px; font-weight: 500;">Experience: 10+ Years</span>
                   </div>
                </div>
             </div>
          </div>
-      </section>
+
+         <!-- 👤 Member 2 -->
+         <div class="col-md-4">
+            <div class="th-team team-card" style="height: 450px;">
+               <div class="team-img">
+                  <img src="assets/img/team/team-2.svg" alt="Team" style="width: 100%; height: auto;">
+               </div>
+               <div class="team-content" style="padding: 20px;">
+                  <div class="box-particle" id="team-p1"></div>
+                  <h3 class="box-title">Ajith Shanmugavel</h3>
+                  <div class="team-meta">
+                     <span class="team-desig"><b>Azure DevOps</b></span>
+                     <span class="team-desig" style="display: block; margin-top: 6px; font-weight: 500;">Experience: 5+ Years</span>
+                  </div>
+               </div>
+            </div>
+         </div>
+
+         <!-- 👤 Member 3 -->
+         <div class="col-md-4">
+            <div class="th-team team-card" style="height: 450px;">
+               <div class="team-img">
+                  <img src="assets/img/team/team-3.svg" alt="Team" style="width: 100%; height: auto;">
+               </div>
+               <div class="team-content" style="padding: 20px;">
+                  <div class="box-particle" id="team-p1"></div>
+                  <h3 class="box-title">Manojkumar T</h3>
+                  <div class="team-meta">
+                     <span class="team-desig"><b>Aws DevOps</b></span>
+                     <span class="team-desig" style="display: block; margin-top: 6px; font-weight: 500;">Experience: 5+ Years</span>
+                  </div>
+               </div>
+            </div>
+         </div>
+<style>
+@media (min-width: 768px) {
+  .custom-top-gap {
+    margin-top: 80px !important;
+  }
+}
+</style>
+
+         <!-- 👤 Member 4 -->
+         <div class="col-md-4 custom-top-gap">
+
+            <div class="th-team team-card" style="height: 450px;">
+               <div class="team-img">
+                  <img src="assets/img/team/team-4.svg" alt="Team" style="width: 100%; height: auto;">
+               </div>
+               <div class="team-content" style="padding: 20px;">
+                  <div class="box-particle" id="team-p1"></div>
+                  <h3 class="box-title">Gopinath A</h3>
+                  <div class="team-meta">
+                     <span class="team-desig"><b>Lead Trainer Multi cloud with DevOps</b></span>
+                     <span class="team-desig" style="display: block; margin-top: 6px; font-weight: 500;">Experience: 8+ Years</span>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</section>
+
+
       <section class="bg-top-center space" data-bg-src="assets/img/bg/testi_bg_3.jpg">
          <div class="container">
             <div data-aos="zoom-in" data-aos-duration="1000" class="title-area text-center">
@@ -1459,6 +1493,69 @@
          100% { transform: scale(1); opacity: 1; }
          }
       </style>
+
+
+
+
+               <div class="branch-buttons text-center">
+               <button class="btn btn-primary btn-sm" onclick="changeMap('porur')"><b>Porur</b></button>
+               <button class="btn btn-warning btn-sm" onclick="changeMap('Ambattur')"><b>Ambattur</b></button>
+               <button class="btn btn-danger btn-sm" onclick="changeMap('Avadi')"><b>Avadi</b></button>
+               <button class="btn btn-success btn-sm" onclick="changeMap('MountRoad')"><b>Mount Road</b></button>
+               </div>
+
+               <div class="map-wrapper mt-4">
+               <div class="map-container">
+                  <iframe id="gmap" loading="lazy" allowfullscreen></iframe>
+               </div>
+               </div>
+               <style>
+               .map-wrapper {
+                  padding-left: 15px;
+                  padding-right: 15px;
+               }
+
+               .map-container {
+                  display: flex;
+                  justify-content: center;
+               }
+
+               #gmap {
+                  width: 100%;
+                  max-width: 900px;
+                  height: 500px;
+                  border: 0;
+                  border-radius: 15px;
+                  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+               }
+               </style>
+               <script>
+               const locations = {
+                  porur:"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3694.8295973330596!2d80.17399137484236!3d13.025277687295114!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a5261d57bdce53b%3A0x809b300b38398912!2sGreens%20Technology!5e1!3m2!1sen!2sin!4v1754399607117!5m2!1sen!2sin",
+                  Ambattur:"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3693.4165706527183!2d80.14654027795656!3d13.119661554229983!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a52633486dd0445%3A0xfb9b22b08e8f2bc1!2sGreens%20Technology%20Ambattur!5e1!3m2!1sen!2sin!4v1754399904810!5m2!1sen!2sin",
+                  Avadi:"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3693.4194923356517!2d80.09088227484408!3d13.119467087209644!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a52893c0003dcdd%3A0x3259190735021a8d!2sGreens%20Technologies%20Avadi!5e1!3m2!1sen!2sin!4v1754400026843!5m2!1sen!2sin",
+                  MountRoad:"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3694.30155645194!2d80.25891127484299!3d13.060626887262954!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a52678759e15b3b%3A0x79fa7a64fa3c7d39!2sGreens%20Technologys%20Mount%20Road!5e1!3m2!1sen!2sin!4v1754400122666!5m2!1sen!2sin"
+                  // Add more branches
+               };
+
+               function changeMap(branch) {
+                  document.getElementById("gmap").src = locations[branch];
+               }
+
+               // Set default location
+               changeMap('porur');
+               </script>
+
+
+
+
+               <br>
+
+
+
+
+
+
       <footer class="footer-wrapper footer-layout1">
          <div class="copyright-wrap bg-title">
             <div class="container">
