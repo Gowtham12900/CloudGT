@@ -1,17 +1,27 @@
 <?php
-   session_start();
-   
-   // ✅ Check session login
-   if (!isset($_SESSION['admin_email'])) {
-       echo "<script>alert('Please login to access'); window.location.href='index.php';</script>";
-       exit;
-   }
-   ?>
+session_start();
+
+// ✅ Check session login
+if (!isset($_SESSION['admin_email'])) {
+    echo "<script>alert('Please login to access'); window.location.href='index.php';</script>";
+    exit;
+}
+
+// ✅ Fetch existing WhatsApp group links
+include 'db.php';
+
+$links = [];
+$result = $conn->query("SELECT course_name, group_link FROM whatsapp_links");
+while ($row = $result->fetch_assoc()) {
+    $links[$row['course_name']] = $row['group_link'];
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
    <head>
       <meta charset="utf-8">
-      <title>Syllabus Edit</title>
+      <title>Whatsapp Link Edit</title>
       <meta content="width=device-width, initial-scale=1.0" name="viewport">
       <meta content="" name="keywords">
       <meta content="" name="description">
@@ -58,9 +68,9 @@
                   </div>
                </div>
                <div class="navbar-nav w-100">
-                  <a href="syllabus.php" class="nav-item nav-link active"><i class="fa fa-book"></i><b>Syllabus Edit</b></a>
+                  <a href="syllabus.php" class="nav-item nav-link"><i class="fa fa-book"></i>Syllabus Edit</a>
                   <a href="booking.php" class="nav-item nav-link"><i class="fa fa-check-square"></i>View Bookings</a>
-                  <a href="whatsapp.php" class="nav-item nav-link"><i class="fab fa-whatsapp"></i>Whatsapp Link</a>
+                  <a href="whatsapp.php" class="nav-item nav-link active"><i class="fab fa-whatsapp"></i><b>Whatsapp Link</b></a>
                   <a href="index.php" class="nav-item nav-link"><i class="fa fa-sign-out-alt"></i>Logout</a>
                </div>
             </nav>
@@ -94,62 +104,59 @@
             <!-- Navbar End -->
             <br>
             <!-- 🎯 Edit Forms Row Start -->
-            <div class="container-fluid pt-4 px-4">
-               <!-- 🎯 Edit Days Form -->
-               <div class="row g-4 mb-4">
-                  <div class="col-md-6 col-lg-4 mx-auto">
-                     <form action="update_settings.php" method="POST">
-                        <div style="background-color: #008080;" class="rounded h-100 p-4">
-                           <h3 class="text-light text-center mb-4">Edit Days</h3>
-                           <div class="form-floating mb-3">
-                              <input type="number" class="form-control" name="days" id="days" placeholder="days" required>
-                              <label for="days">Enter Days</label>
-                           </div>
-                           <div class="d-flex justify-content-center">
-                              <button type="submit" class="btn btn-warning btn-lg text-dark"><b>Change Days</b></button>
-                           </div>
-                        </div>
-                     </form>
-                  </div>
-               </div>
-               <!-- 🎯 Edit Date Form -->
-               <div class="row g-4 mb-4">
-                  <div class="col-md-6 col-lg-4 mx-auto">
-                     <form action="update_settings.php" method="POST">
-                        <div style="background-color: #008080;" class="rounded h-100 p-4">
-                           <h3 class="text-light text-center mb-4">Edit Date</h3>
-                           <!-- From Date -->
-                           <div class="form-floating mb-3">
-                              <input type="date" class="form-control" name="from_date" id="from_date" placeholder="From Date" required>
-                              <label for="from_date">From Date</label>
-                           </div>
-                           <!-- To Date -->
-                           <div class="form-floating mb-3">
-                              <input type="date" class="form-control" name="to_date" id="to_date" placeholder="To Date" required>
-                              <label for="to_date">To Date</label>
-                           </div>
-                           <div class="d-flex justify-content-center">
-                              <button type="submit" class="btn btn-warning btn-lg text-dark"><b>Change Date</b></button>
-                           </div>
-                        </div>
-                     </form>
-                  </div>
-               </div>
-            </div>
-            <?php if (isset($_SESSION['update_messages'])): ?>
-            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-            <script>
-               Swal.fire({
-                  icon: 'success',
-                  title: 'Updated!',
-                  html: `<?php echo implode("<br>", $_SESSION['update_messages']); ?>`,
-                  confirmButtonColor: '#3085d6',
-                  confirmButtonText: 'OK'
-               });
-            </script>
-            <?php unset($_SESSION['update_messages']); ?>
-            <?php endif; ?>
+             <div class="container py-5">
+    <div class="card shadow p-4">
+      <div style="background-color:#008080;" class="rounded h-100 p-4">
+      <h2 class="mb-4 text-light text-center">Update WhatsApp Group Links</h2>
+      <table style="color:#fff;" class="table table-responsive table-bordered align-middle text-center">
+        <thead style="color:#f1e60b;">
+          <tr>
+            <th>S.No</th>
+            <th>Course</th>
+            <th>Group Link</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <?php
+          $courses = [
+              "AWS DevOps",
+              "AWS With Terraform",
+              "Azure DevOps",
+              "GCP DevOps",
+              "Multi Cloud DevOps",
+              "Data Analytics",
+              "Data Science",
+              "Machine Learning",
+              "Python with AI",
+              "Redhat Linux"
+          ];
+
+          $i = 1;
+          foreach ($courses as $course) {
+              $value = isset($links[$course]) ? $links[$course] : '';
+              echo '
+              <tr>
+                <form action="update_links.php" method="POST">
+                  <td>' . $i++ . '</td>
+                  <td>' . htmlspecialchars($course) . '</td>
+                  <td><input type="url" class="form-control" name="link_value" placeholder="Enter Group Link" value="' . htmlspecialchars($value) . '"  pattern="https?://.+" title="Enter a valid link starting with http:// or https://"><input type="hidden" name="course_name" value="' . htmlspecialchars($course) . '"></td>
+
+
+                  <td>
+                    <button type="submit" class="btn btn-warning">Update</button>
+                  </td>
+                </form>
+              </tr>';
+          }
+          ?>
+
+        </tbody>
+      </table>
          </div>
+    </div>
+  </div>
          <!-- Content End -->
          <!-- Back to Top -->
          <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
@@ -168,14 +175,5 @@
       <script src="js/main.js"></script>
       <!-- SweetAlert2 Script -->
       <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-      <?php if (isset($_GET['status']) && $_GET['status'] == 'days_updated'): ?>
-      <?php endif; ?>
-      <?php if (isset($_SESSION['update_messages'])): ?>
-      <script>
-         <?php foreach ($_SESSION['update_messages'] as $msg): ?>
-         alert("<?= $msg ?>");
-         <?php endforeach; ?>
-      </script>
-      <?php unset($_SESSION['update_messages']); endif; ?>
    </body>
 </html>

@@ -62,6 +62,7 @@
                <div class="navbar-nav w-100">
                   <a href="syllabus.php" class="nav-item nav-link"><i class="fa fa-book"></i>Syllabus Edit</a>
                   <a href="booking.php" class="nav-item nav-link active"><i class="fa fa-check-square"></i><b>View Bookings</b></a>
+                  <a href="whatsapp.php" class="nav-item nav-link"><i class="fab fa-whatsapp"></i>Whatsapp Link</a>
                   <a href="index.php" class="nav-item nav-link"><i class="fa fa-sign-out-alt"></i>Logout</a>
                </div>
          </div>

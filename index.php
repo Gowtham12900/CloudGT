@@ -1,4 +1,5 @@
 <?php
+
    $conn = new mysqli("localhost", "root", "", "greens");
    if ($conn->connect_error) {
        die("Connection failed: " . $conn->connect_error);
@@ -41,8 +42,11 @@
        }
        
    session_start();
-   $name = $_SESSION['popup_name'] ?? null;
-   unset($_SESSION['popup_name']);
+$name = $_SESSION['popup_name'] ?? null;
+$whatsapp_link = $_SESSION['popup_whatsapp'] ?? null;
+// Clear after using
+unset($_SESSION['popup_name']);
+unset($_SESSION['popup_whatsapp']);
       }
    ?>
 <!doctype html>
@@ -1607,47 +1611,50 @@
          });
       </script>
       <?php if (!empty($name)): ?>
-      <style>
-         #confetti-canvas {
-         position: fixed !important;
-         top: 0;
-         left: 0;
-         width: 100% !important;
-         height: 100% !important;
-         z-index: 99999 !important;
-         pointer-events: none;
-         }
-      </style>
-      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-      <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
-      <script>
-         document.addEventListener("DOMContentLoaded", function () {
-          
-           const canvas = document.createElement('canvas');
-           canvas.id = "confetti-canvas";
-           document.body.appendChild(canvas);
-         
-           const myConfetti = confetti.create(canvas, {
-             resize: true,
-             useWorker: true
-           });
-         
-          
-           myConfetti({
-             particleCount: 200,
-             spread: 120,
-             origin: { y: 0.6 }
-           });
-         
-         
-           Swal.fire({
-             icon: 'success',
-             title: '<?= $name ?>',
-             text: 'Thank You For Contacting Us!',
-             confirmButtonColor: '#00b894'
-           });
-         });
-      </script>
-      <?php endif; ?>
+<style>
+#confetti-canvas {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
+    z-index: 99999 !important;
+    pointer-events: none;
+}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const canvas = document.createElement('canvas');
+    canvas.id = "confetti-canvas";
+    document.body.appendChild(canvas);
+
+    const myConfetti = confetti.create(canvas, {
+        resize: true,
+        useWorker: true
+    });
+
+    myConfetti({
+        particleCount: 200,
+        spread: 120,
+        origin: { y: 0.6 }
+    });
+
+    Swal.fire({
+        icon: 'success',
+        title: '<?= $name ?>',
+        text: 'Thank You For Contacting Us!',
+        confirmButtonColor: '#00b894',
+        confirmButtonText: 'OK',
+        allowOutsideClick: false
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = "<?= !empty($whatsapp_link) ? $whatsapp_link : 'index.php' ?>";
+        }
+    });
+});
+</script>
+<?php endif; ?>
    </body>
 </html>
