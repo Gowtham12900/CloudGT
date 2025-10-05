@@ -1,13 +1,13 @@
 <?php
 session_start();
 
-// ✅ Check session login
+// Check session login
 if (!isset($_SESSION['admin_email'])) {
     echo "<script>alert('Please login to access'); window.location.href='index.php';</script>";
     exit;
 }
 
-// ✅ Fetch existing WhatsApp group links
+// Fetch existing WhatsApp group links
 include 'db.php';
 
 $links = [];
@@ -71,6 +71,7 @@ while ($row = $result->fetch_assoc()) {
                   <a href="syllabus.php" class="nav-item nav-link"><i class="fa fa-book"></i>Syllabus Edit</a>
                   <a href="booking.php" class="nav-item nav-link"><i class="fa fa-check-square"></i>View Bookings</a>
                   <a href="whatsapp.php" class="nav-item nav-link active"><i class="fab fa-whatsapp"></i><b>Whatsapp Link</b></a>
+                   <a href="payment.php" class="nav-item nav-link"><i class="fa fa-qrcode"></i>Payment Update</a>
                   <a href="index.php" class="nav-item nav-link"><i class="fa fa-sign-out-alt"></i>Logout</a>
                </div>
             </nav>
@@ -103,7 +104,7 @@ while ($row = $result->fetch_assoc()) {
             </nav>
             <!-- Navbar End -->
             <br>
-            <!-- 🎯 Edit Forms Row Start -->
+            <!-- Edit Forms Row Start -->
              <div class="container py-5">
     <div class="card shadow p-4">
       <div style="background-color:#008080;" class="rounded h-100 p-4">

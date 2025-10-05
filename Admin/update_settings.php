@@ -1,7 +1,6 @@
 <?php
 session_start();
 
-// (Optional during development)
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
@@ -33,6 +32,13 @@ if (isset($_POST['to_date']) && $_POST['to_date'] !== "") {
    $to_date = $conn->real_escape_string($_POST['to_date']);
    $updates[] = "to_date = '$to_date'";
    $messages[] = "";
+}
+
+// ✅ Update Price
+if (isset($_POST['price']) && $_POST['price'] !== "") {
+   $price = $conn->real_escape_string($_POST['price']);
+   $updates[] = "price = '$price'";
+   $messages[] = "Price updated successfully!";
 }
 
 // Final Update Query

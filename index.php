@@ -1,64 +1,84 @@
 <?php
 
-   $conn = new mysqli("localhost", "root", "", "greens");
-   if ($conn->connect_error) {
-       die("Connection failed: " . $conn->connect_error);
-   }
+$conn = new mysqli("localhost", "root", "", "greens");
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+$sql = "SELECT workshop_days, from_date, to_date, price FROM settings WHERE id = 1";
+$result = $conn->query($sql);
+
+
+$workshop_days = "3";
+$formatted_dates = "July 27, 28 and 29 2025";
+$workshop_date = "2025-07-27";
+$price = "49"; 
+
+if ($result && $row = $result->fetch_assoc()) {
+    $workshop_days = $row['workshop_days'];
+    $workshop_date = $row['from_date'];
+    $price = $row['price'];
+
    
-   $sql = "SELECT workshop_days, from_date, to_date FROM settings WHERE id = 1";
-   $result = $conn->query($sql);
-   
-   $workshop_days = "3";
-   $formatted_dates = "July 27, 28 and 29 2025";
-   $workshop_date = "2025-07-27";
-   
-   if ($result && $row = $result->fetch_assoc()) {
-       $workshop_days = $row['workshop_days'];
-       $workshop_date = $row['from_date'];
-   
-       $from = new DateTime($row['from_date']);
-       $to = new DateTime($row['to_date']);
-       $to->modify('+1 day'); 
-       $year = $from->format('Y');
-   
-       $dates = [];
-       $isFirst = true;
-   
-       while ($from < $to) {
-           if ($isFirst) {
-               $dates[] = $from->format('F d'); 
-               $isFirst = false;
-           } else {
-               $dates[] = $from->format('d');
-           }
-           $from->modify('+1 day');
-       }
-   
-       if (count($dates) > 1) {
-           $last = array_pop($dates);
-           $formatted_dates = implode(', ', $dates) . ' and ' . $last . ' ' . $year;
-       } else {
-           $formatted_dates = $dates[0] . ' ' . $year;
-       }
-       
-   session_start();
-$name = $_SESSION['popup_name'] ?? null;
-$whatsapp_link = $_SESSION['popup_whatsapp'] ?? null;
-// Clear after using
-unset($_SESSION['popup_name']);
-unset($_SESSION['popup_whatsapp']);
-      }
-   ?>
+    $from = new DateTime($row['from_date']);
+    $to = new DateTime($row['to_date']);
+    $to->modify('+1 day'); 
+    $year = $from->format('Y');
+
+    $dates = [];
+    $isFirst = true;
+
+    while ($from < $to) {
+        if ($isFirst) {
+            $dates[] = $from->format('F d'); 
+            $isFirst = false;
+        } else {
+            $dates[] = $from->format('d');
+        }
+        $from->modify('+1 day');
+    }
+
+    if (count($dates) > 1) {
+        $last = array_pop($dates);
+        $formatted_dates = implode(', ', $dates) . ' and ' . $last . ' ' . $year;
+    } else {
+        $formatted_dates = $dates[0] . ' ' . $year;
+    }
+
+    session_start();
+    $name = $_SESSION['popup_name'] ?? null;
+    $whatsapp_link = $_SESSION['popup_whatsapp'] ?? null;
+    unset($_SESSION['popup_name']);
+    unset($_SESSION['popup_whatsapp']);
+}
+
+
+include('phpqrcode/qrlib.php'); 
+
+$qr_folder = "qr";
+if(!file_exists($qr_folder)){
+    mkdir($qr_folder, 0777, true);
+}
+
+$upi_id = "gowthamjayaram333-3@okaxis"; // Replace with your UPI ID
+$payee_name = "gowtham"; // Replace with your name/business
+$qr_file = $qr_folder."/qr_temp.png";
+$upi_link = "upi://pay?pa={$upi_id}&pn={$payee_name}&am={$price}&cu=INR";
+
+
+QRcode::png($upi_link, $qr_file, QR_ECLEVEL_L, 6);
+?>
+
 <!doctype html>
 <html class="no-js" lang="zxx">
    <head>
       <meta charset="utf-8">
       <meta http-equiv="x-ua-compatible" content="ie=edge">
       <title>Pavan - Greens Technologies</title>
-      <meta name="author" content="Themeholy">
-      <meta name="description" content="Greens Technologies">
-      <meta name="keywords" content="Greens Technologies">
-      <meta name="robots" content="INDEX,FOLLOW">
+      <meta name="description" content="Join Greens Technologies - Chennai's leading IT training institute. Pavan’s expert guidance in AWS, DevOps, Python, Java, and more helps you achieve your career goals.">
+      <meta name="keywords" content="Greens Technologies, IT Training Chennai, Pavan Greens Tech, AWS Training, DevOps Training, Python Training, Java Training">
+      <meta name="author" content="Greens Technologies">
+      <meta name="robots" content="index, follow">
       <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
       <link rel="apple-touch-icon" sizes="57x57" href="assets/img/Pavan/greens-logo.png">
       <link rel="apple-touch-icon" sizes="60x60" href="assets/img/Pavan/greens-logo.png">
@@ -575,11 +595,13 @@ unset($_SESSION['popup_whatsapp']);
       <section class="countdown-offer">
          <div class="container text-center">
             <h4 data-aos="zoom-in" data-aos-duration="1000" style="color: #fff;">
-               Secure Your Spot in the 
-               <span class="highlight"><?php echo $workshop_days; ?>-Days</span> 
-               Trending Cloud Technology Workshop – Starts from 
-               <span class="highlight"><?php echo $formatted_dates; ?>!</span>
-            </h4>
+            Secure Your Spot in the 
+            <span class="highlight"><?php echo $workshop_days; ?>-Days</span> 
+            Trending Cloud Technology Workshop – Starts from 
+            <span class="highlight"><?php echo $formatted_dates; ?></span>. 
+            Enroll now for <span class="highlight">just ₹<?php echo $price; ?></span> and upgrade your cloud skills!
+         </h4>
+
             <h5 style="color: #fff;">Challenge Starts In:</h5>
             <div id="countdown" class="countdown-timer">
                <div class="time-box">
@@ -635,51 +657,109 @@ unset($_SESSION['popup_whatsapp']);
                   </div>
                </button>
             </div>
+
             <!-- Modal -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-               <div class="modal-dialog">
-                  <div class="modal-content">
-                     <div class="modal-header justify-content-center border-0">
-                        <h1 class="modal-title fs-5 text-success text-center w-100" id="exampleModalLabel"><b>Book For Live Demo</b></h1>
-                        <button type="button" class="btn-close position-absolute end-0 me-3" data-bs-dismiss="modal" aria-label="Close"></button>
-                     </div>
-                     <div class="modal-body">
-                        <form action="submit_booking.php" method="POST">
-                           <div class="form-floating mb-3">
-                              <input type="text" class="form-control" name="name" required placeholder="Name">
-                              <label>Name</label>
-                           </div>
-                           <div class="form-floating mb-3">
-                              <input type="number" class="form-control" name="number" required placeholder="Number">
-                              <label>Number</label>
-                           </div>
-                           <div class="form-floating mb-3">
-                              <input type="text" class="form-control" name="location" required placeholder="Location">
-                              <label>Location</label>
-                           </div>
-                           <div class="form-floating mb-3">
-                              <select class="form-select" name="course" id="course" required>
-                                 <option value="" selected disabled>Select Course</option>
-                                 <option>AWS DevOps</option>
-                                 <option>AWS With Terraform</option>
-                                 <option>Azure DevOps</option>
-                                 <option>GCP DevOps</option>
-                                 <option>Multi Cloud DevOps</option>
-                                 <option>Data Analytics</option>
-                                 <option>Data Science</option>
-                                 <option>Machine Learning</option>
-                                 <option>Python with AI</option>
-                                 <option>Redhat Linux</option>
-                              </select>
-                              <label for="course">Course</label>
-                           </div>
-                           <button type="submit" class="btn btn-success">Submit</button>
-                           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><b>Close</b></button>
-                        </form>
-                     </div>
-                  </div>
+
+
+
+
+
+
+
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header justify-content-center border-0">
+            <h1 class="modal-title fs-5 text-success text-center w-100" id="exampleModalLabel"><b>Book For Live Demo</b></h1>
+            <button type="button" class="btn-close position-absolute end-0 me-3" data-bs-dismiss="modal" aria-label="Close"></button>
+         </div>
+         <div class="modal-body">
+            
+            <form action="submit_booking.php" method="POST" enctype="multipart/form-data">
+               <!-- Name -->
+               <div class="form-floating mb-3">
+                  <input type="text" class="form-control" name="name" required placeholder="Name">
+                  <label>Name</label>
                </div>
-            </div>
+
+               <!-- Number -->
+               <div class="form-floating mb-3">
+                  <input type="number" class="form-control" name="number" required placeholder="Number">
+                  <label>Number</label>
+               </div>
+
+               <!-- Location -->
+               <div class="form-floating mb-3">
+                  <input type="text" class="form-control" name="location" required placeholder="Location">
+                  <label>Location</label>
+               </div>
+
+               <!-- Course -->
+               <div class="form-floating mb-3">
+                  <select class="form-select" name="course" id="course" required>
+                     <option value="" selected disabled>Select Course</option>
+                     <option>AWS DevOps</option>
+                     <option>AWS With Terraform</option>
+                     <option>Azure DevOps</option>
+                     <option>GCP DevOps</option>
+                     <option>Multi Cloud DevOps</option>
+                     <option>Data Analytics</option>
+                     <option>Data Science</option>
+                     <option>Machine Learning</option>
+                     <option>Python with AI</option>
+                     <option>Redhat Linux</option>
+                  </select>
+                  <label for="course">Course</label>
+               </div>
+
+               <!--Dynamic QR Code -->
+             <div class="mb-3 text-center"> <label class="form-label text-light">Scan QR Code to Pay</label> <div> <img src="<?php echo $qr_file; ?>" alt="QR Code" style="max-width:200px;" class="img-fluid mb-2"> </div> </div>
+
+
+
+
+
+               
+               <?php
+$res = $conn->query("SELECT upi_id FROM upi_table ORDER BY id DESC LIMIT 1");
+$latest_upi = ($res->num_rows>0) ? $res->fetch_assoc()['upi_id'] : "Please Scan Above QR Code";
+?>
+<div class="mb-3">
+    <label class="form-label text-light">UPI ID</label>
+    <div class="input-group">
+        <input type="text" class="form-control" id="upiField" name="upi_id" 
+               value="<?php echo $latest_upi; ?>" readonly>
+        <span class="input-group-text" id="copyBtn" style="cursor:pointer;">📋</span>
+    </div>
+    
+    <div id="copyAlert" class="alert mt-2" role="alert" 
+         style="display:none; background-color:#28a745; color:#fff;">
+        <b>UPI Copied!</b>
+    </div>
+</div>
+
+
+
+
+
+
+               <!-- Payment Screenshot -->
+                <div class="mb-3">
+        <label for="payment_screenshot" class="form-label text-light">Upload Payment Screenshot</label>
+        <input class="form-control form-control-lg" type="file" id="payment_screenshot" name="payment_screenshot" accept="image/*" required>
+    </div>
+
+               <button type="submit" class="btn btn-success">Submit</button>
+               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><b>Close</b></button>
+            </form>
+
+         </div>
+      </div>
+   </div>
+</div>
+
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
             <style>
                .modal {
@@ -1611,6 +1691,22 @@ unset($_SESSION['popup_whatsapp']);
          });
       </script>
       <?php if (!empty($name)): ?>
+
+<script>
+document.getElementById("copyBtn").addEventListener("click", function() {
+    var upiField = document.getElementById("upiField");
+    navigator.clipboard.writeText(upiField.value).then(function() {
+        var alertBox = document.getElementById("copyAlert");
+        alertBox.style.display = "block";
+      
+        setTimeout(function() {
+            alertBox.style.display = "none";
+        }, 2500);
+    });
+});
+</script>
+
+
 <style>
 #confetti-canvas {
     position: fixed !important;
